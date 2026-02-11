@@ -75,6 +75,35 @@ button {
     border: none;
     border-radius: 5px;
     margin-top: 10px;
+    cursor: pointer;
+}
+
+.valentine-actions {
+    position: relative;
+    width: 100%;
+    height: 140px;
+    margin-top: 14px;
+}
+
+#yes-btn,
+#no-btn {
+    position: absolute;
+    min-width: 90px;
+}
+
+#yes-btn {
+    left: 16%;
+    top: 40%;
+}
+
+#no-btn {
+    left: 58%;
+    top: 40%;
+}
+
+#yes-message {
+    margin-top: 20px;
+    font-size: 18px;
 }
 
 .heart {

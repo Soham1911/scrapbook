@@ -41,8 +41,53 @@ function showReasons() {
     document.getElementById("reasons").style.display = "block";
 }
 
+function moveNoButton() {
+    const actions = document.getElementById("valentine-actions");
+    const noBtn = document.getElementById("no-btn");
+
+    if (!actions || !noBtn) return;
+
+    const maxX = Math.max(actions.clientWidth - noBtn.offsetWidth, 0);
+    const maxY = Math.max(actions.clientHeight - noBtn.offsetHeight, 0);
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+function setupValentineButtons() {
+    const yesBtn = document.getElementById("yes-btn");
+    const noBtn = document.getElementById("no-btn");
+    const yesMessage = document.getElementById("yes-message");
+
+    if (noBtn) {
+        noBtn.addEventListener("mouseenter", moveNoButton);
+        noBtn.addEventListener("touchstart", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            moveNoButton();
+        }, { passive: false });
+        noBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            moveNoButton();
+        });
+    }
+
+    if (yesBtn && yesMessage) {
+        yesBtn.addEventListener("click", function(e) {
+            e.stopPropagation();
+            yesMessage.style.display = "block";
+        });
+    }
+}
+
 /* FORCE TAP TO TURN */
 document.addEventListener("click", function(e) {
+    const interactiveTarget = e.target.closest("button, input, textarea, select, label, a, #reasons");
+    if (interactiveTarget) return;
+
     if (flipInitialized) {
         $("#flipbook").turn("next");
     }
@@ -62,3 +107,5 @@ function createHeart() {
 }
 
 setInterval(createHeart, 1200); 
+
+setupValentineButtons();
