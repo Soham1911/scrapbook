@@ -167,6 +167,9 @@ function setupInteractivePages() {
             e.stopPropagation();
             if (!chipOutput) return;
             chipOutput.textContent = chip.dataset.text || "";
+            chipOutput.classList.remove("note-reveal");
+            void chipOutput.offsetWidth;
+            chipOutput.classList.add("note-reveal");
         });
     });
 
@@ -310,3 +313,8 @@ setInterval(createHeart, 1500);
 setupInteractivePages();
 setupValentineButtons();
 window.addEventListener("resize", syncFlipbookSize);
+
+
+
+
+
