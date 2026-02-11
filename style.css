@@ -59,14 +59,14 @@ body {
 }
 
 #flipbook-container {
-    width: 100vw;
-    height: 100dvh;
-    max-width: none;
+    width: min(94vw, 430px);
+    height: min(92dvh, 860px);
+    max-width: 430px;
     aspect-ratio: auto;
-    border-radius: 0;
+    border-radius: 16px;
     background: rgba(255, 255, 255, 0.26);
-    border: none;
-    box-shadow: none;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    box-shadow: 0 22px 45px rgba(70, 37, 65, 0.22);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     overflow: hidden;
@@ -75,8 +75,8 @@ body {
 #flipbook {
     width: 100%;
     height: 100%;
-    box-shadow: none;
-    border-radius: 0;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
 }
 
 .page {
@@ -92,6 +92,12 @@ body {
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.75), inset 0 -20px 30px rgba(255, 228, 238, 0.2);
     overflow: hidden;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
 }
 
 .page::after {
@@ -206,6 +212,7 @@ button:active {
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x proximity;
     scrollbar-width: thin;
+    justify-content: flex-start;
 }
 
 .photo-board > * {
@@ -290,20 +297,38 @@ button:active {
 }
 
 .hidden-note {
-    margin-top: 6px;
-    padding: 6px 8px;
-    border-radius: 10px;
-    border: 1px solid rgba(223, 156, 184, 0.6);
-    background: rgba(255, 240, 247, 0.85);
+    margin-top: 8px;
+    width: min(92%, 320px);
+    padding: 10px 12px;
+    border-radius: 3px;
+    border: 1px solid rgba(214, 171, 185, 0.8);
+    background:
+        linear-gradient(transparent 26px, rgba(220, 174, 192, 0.14) 27px) 0 0 / 100% 28px,
+        linear-gradient(90deg, rgba(249, 224, 233, 0.9), rgba(255, 248, 251, 0.95));
+    box-shadow: 0 9px 22px rgba(104, 64, 83, 0.2);
     opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    transform: translateY(18px) rotate(-5deg) scale(0.9);
+    transition: opacity 0.35s ease, transform 0.35s ease;
     pointer-events: none;
+    transform-origin: top center;
+}
+
+.hidden-note::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    width: 68px;
+    height: 16px;
+    transform: translateX(-50%) rotate(-2deg);
+    background: linear-gradient(120deg, rgba(255, 236, 160, 0.9), rgba(255, 226, 130, 0.8));
+    border-radius: 2px;
+    box-shadow: 0 1px 1px rgba(99, 75, 21, 0.2);
 }
 
 .hidden-note.show {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) rotate(-1deg) scale(1);
 }
 
 .memory-chips {
@@ -349,12 +374,18 @@ button:active {
     flex: 0 0 calc(42% - 6px);
 }
 
+.shuffle-board .polaroid {
+    transition: transform 0.35s ease, box-shadow 0.25s ease;
+}
+
 .timeline {
     display: flex;
     gap: 6px;
     margin-top: 4px;
     overflow-x: auto;
     padding-bottom: 2px;
+    justify-content: center;
+    width: 100%;
 }
 
 .timeline-step {
@@ -388,24 +419,93 @@ button:active {
 }
 
 .envelope-card {
+    position: relative;
     margin: 6px 0;
-    padding: 8px;
-    border-radius: 12px;
-    border: 1px dashed rgba(193, 124, 154, 0.5);
-    background: rgba(255, 245, 249, 0.92);
+    width: min(94%, 330px);
+    min-height: 120px;
+    padding: 16px 12px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(187, 137, 157, 0.65);
+    background: linear-gradient(180deg, #fff4f8, #f7dce8);
+    box-shadow: 0 16px 24px rgba(103, 62, 81, 0.18);
+    overflow: hidden;
+    perspective: 900px;
+}
+
+.envelope-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 56%;
+    background: linear-gradient(180deg, #fde1ec, #f9cedf);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top center;
+    transition: transform 0.55s ease;
+    z-index: 2;
+}
+
+.envelope-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(45deg, rgba(255, 255, 255, 0.38) 20%, transparent 20%),
+        linear-gradient(-45deg, rgba(255, 255, 255, 0.2) 20%, transparent 20%);
+    background-size: 18px 18px;
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.envelope-card.open::before {
+    transform: rotateX(172deg);
 }
 
 .secret-letter {
-    margin-top: 6px;
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    margin-top: 0;
+    padding: 10px;
+    border-radius: 4px;
+    background: linear-gradient(180deg, #fffefa, #fff3f8);
+    border: 1px solid rgba(212, 172, 189, 0.7);
+    box-shadow: 0 5px 12px rgba(97, 66, 82, 0.15);
+    font-size: 12px;
+    line-height: 1.2;
     opacity: 0;
     max-height: 0;
     overflow: hidden;
-    transition: opacity 0.28s ease, max-height 0.28s ease;
+    transform: translateY(16px);
+    transition: opacity 0.35s ease, max-height 0.35s ease, transform 0.35s ease;
+    z-index: 0;
 }
 
 .secret-letter.show {
     opacity: 1;
-    max-height: 140px;
+    max-height: 160px;
+    transform: translateY(-8px);
+    z-index: 3;
+}
+
+.sticker {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-1deg);
+    z-index: 4;
+    min-width: 112px;
+    transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+}
+
+.sticker.opened {
+    transform: translateX(-50%) translateY(-10px) rotate(4deg) scale(0.92);
+    opacity: 0.7;
+    filter: saturate(0.8);
+    pointer-events: none;
 }
 
 .valentine-actions {
@@ -432,9 +532,51 @@ button:active {
     transition: left 0.15s ease, top 0.15s ease;
 }
 
-#yes-message {
+.yes-message {
+    display: none;
+    margin-top: 10px;
+    font-family: "Pacifico", cursive;
+    color: #6c2344;
+    font-size: 24px;
+    line-height: 1.05;
+    text-shadow: 0 2px 0 rgba(255, 255, 255, 0.55), 0 8px 20px rgba(196, 47, 108, 0.35);
+    opacity: 0;
+    transform: translateY(10px) scale(0.9);
+}
+
+.yes-message span {
+    display: block;
     margin-top: 8px;
-    font-size: 16px;
+    font-size: 18px;
+}
+
+.yes-message.show {
+    display: block;
+    animation: dramaticYes 1.1s cubic-bezier(0.19, 1, 0.22, 1) forwards, softGlow 1.7s ease-in-out 1.1s infinite alternate;
+}
+
+@keyframes dramaticYes {
+    0% {
+        opacity: 0;
+        transform: translateY(22px) scale(0.75);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(-4px) scale(1.08);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes softGlow {
+    from {
+        text-shadow: 0 2px 0 rgba(255, 255, 255, 0.5), 0 8px 20px rgba(196, 47, 108, 0.3);
+    }
+    to {
+        text-shadow: 0 2px 0 rgba(255, 255, 255, 0.62), 0 12px 30px rgba(196, 47, 108, 0.52);
+    }
 }
 
 .heart {
@@ -473,12 +615,25 @@ button:active {
     flex-basis: 100%;
 }
 
-@media (min-width: 768px) {
-    #flipbook-container {
-        max-width: 430px;
-        max-height: 860px;
-        border-radius: 18px;
-        border: 1px solid rgba(255, 255, 255, 0.45);
-        box-shadow: 0 22px 45px rgba(70, 37, 65, 0.22);
-    }
+.photo-real {
+    width: 100%;
+    height: 108px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 4px;
+    display: block;
+}
+
+.photo-contain {
+    object-fit: contain;
+    background: #fff8fc;
+    padding: 2px;
+}
+
+.photo-real-custom {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 4px;
+    display: block;
 }

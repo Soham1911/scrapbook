@@ -15,9 +15,10 @@
 <body>
 
 <div id="password-screen">
-    <h2>Enter Our Special Date</h2>
+    <h2>Before these pages bloom, whisper our date of destiny.</h2>
+    <p class="subtitle">Unlock our story where every memory still beats like a love song.</p>
     <input type="password" id="password-input" placeholder="DDMMYYYY" data-no-turn>
-    <button onclick="checkPassword()" data-no-turn>Open Scrapbook</button>
+    <button onclick="checkPassword()" data-no-turn>Open Our Love Story</button>
     <p id="error"></p>
 </div>
 
@@ -38,13 +39,13 @@
             <h2>Chapter 1: Corporate Beginnings</h2>
             <p class="poem">In crowded halls and formal lights,<br>my heart found yours between busy nights.</p>
             <div class="photo-board two-up" data-no-turn>
-                <figure class="polaroid">
-                    <div class="photo-placeholder">Add photo: <code>images/office-first-meet.jpg</code></div>
-                    <figcaption>First glance across the office floor.</figcaption>
+                <figure class="polaroid tilt-right">
+                    <img class="photo-real" src="images/office.JPG" alt="Office annual function">
+                    <figcaption>Our first official office function together.</figcaption>
                 </figure>
                 <figure class="polaroid tilt-right">
-                    <div class="photo-placeholder">Add photo: <code>images/office-coffee-break.jpg</code></div>
-                    <figcaption>The coffee break that started everything.</figcaption>
+                    <img class="photo-real" src="images/concert.jpg" alt="Concert together">
+                    <figcaption>The cindrella story.</figcaption>
                 </figure>
             </div>
             <button class="reveal-btn" data-target="meet-note" data-no-turn>Open Memory Note</button>
@@ -56,12 +57,12 @@
             <p class="poem">Laughter stayed after meetings were done,<br>and friendship turned ordinary days into fun.</p>
             <div class="photo-board two-up" data-no-turn>
                 <figure class="polaroid tilt-left">
-                    <div class="photo-placeholder">Add photo: <code>images/team-lunch.jpg</code></div>
-                    <figcaption>Team lunch, endless jokes.</figcaption>
+                    <img class="photo-real" src="images/dinner.jpg" alt="Team dinner">
+                    <figcaption>Our dinner, full of laughter and joy.</figcaption>
                 </figure>
                 <figure class="polaroid">
-                    <div class="photo-placeholder">Add photo: <code>images/after-work-walk.jpg</code></div>
-                    <figcaption>After work walks that felt like home.</figcaption>
+                    <img class="photo-real" src="images/after-office.JPG" alt="After office walk">
+                    <figcaption>After work chats that felt like home.</figcaption>
                 </figure>
             </div>
             <div class="memory-chips">
@@ -78,17 +79,17 @@
             <label for="love-meter" class="meter-label">How in love are we today?</label>
             <input id="love-meter" class="love-meter" type="range" min="1" max="5" value="3" data-no-turn>
             <p id="love-meter-text" class="meter-text">Somewhere between best friends and soulmates.</p>
-            <div class="photo-board one-wide shuffle-board" data-no-turn id="love-collage">
-                <figure class="polaroid mini" data-no-turn>
-                    <div class="photo-placeholder">Add photo: <code>images/first-date.jpg</code></div>
+            <div class="photo-board two-up shuffle-board" data-no-turn id="love-collage">
+                <figure class="polaroid" data-no-turn>
+                    <img class="photo-real" src="images/first-date.jpg" alt="First date">
                     <figcaption>Our first date.</figcaption>
                 </figure>
-                <figure class="polaroid mini" data-no-turn>
-                    <div class="photo-placeholder">Add photo: <code>images/first-gift.jpg</code></div>
+                <figure class="polaroid" data-no-turn>
+                    <img class="photo-real" src="images/gift.jpg" alt="First gift">
                     <figcaption>The first little gift.</figcaption>
                 </figure>
-                <figure class="polaroid mini" data-no-turn>
-                    <div class="photo-placeholder">Add photo: <code>images/favorite-selfie.jpg</code></div>
+                <figure class="polaroid" data-no-turn>
+                    <img class="photo-real" src="images/smile.jpg" alt="That smile">
                     <figcaption>That smile I fell for.</figcaption>
                 </figure>
             </div>
@@ -100,12 +101,12 @@
             <p class="poem">Two hands, one promise, endless skies,<br>our forever began in each other's eyes.</p>
             <div class="photo-board two-up" data-no-turn>
                 <figure class="polaroid">
-                    <div class="photo-placeholder">Add photo: <code>images/wedding-ceremony.jpg</code></div>
+                    <img class="photo-real" src="images/engagement.JPG" alt="Engagement ceremony">
                     <figcaption>The ceremony.</figcaption>
                 </figure>
                 <figure class="polaroid tilt-right">
-                    <div class="photo-placeholder">Add photo: <code>images/wedding-portrait.jpg</code></div>
-                    <figcaption>Our first portrait as forever.</figcaption>
+                    <img class="photo-real" src="images/wedding-portrait.JPG" alt="Wedding portrait">
+                    <figcaption>The final promise.</figcaption>
                 </figure>
             </div>
             <div class="timeline" data-no-turn>
@@ -121,8 +122,8 @@
             <p class="poem">Now every morning starts with your smile,<br>and every ordinary moment feels worthwhile.</p>
             <div class="photo-board one-wide" data-no-turn>
                 <figure class="polaroid">
-                    <div class="photo-placeholder">Add photo: <code>images/home-moment.jpg</code></div>
-                    <figcaption>Little moments at home.</figcaption>
+                    <img class="photo-real-custom" src="images/after-marriage.jpeg" alt="After marriage moments">
+                    <figcaption>Little moments.</figcaption>
                 </figure>
             </div>
             <div class="love-list" data-no-turn>
@@ -142,7 +143,7 @@
             </div>
             <div class="photo-board one-wide" data-no-turn>
                 <figure class="polaroid tilt-left">
-                    <div class="photo-placeholder">Add photo: <code>images/favorite-us.jpg</code></div>
+                    <img class="photo-real-custom" src="images/fav.jpg" alt="Favorite us">
                     <figcaption>My favorite us.</figcaption>
                 </figure>
             </div>
@@ -154,7 +155,7 @@
                 <button id="yes-btn" type="button" data-no-turn>Yes</button>
                 <button id="no-btn" type="button" data-no-turn>No</button>
             </div>
-            <p id="yes-message" style="display:none;">Yay! I love you so much</p>
+            <p id="yes-message" class="yes-message">It was always you.<span>Now and forever.</span></p>
         </section>
 
     </div>
@@ -163,6 +164,11 @@
 <script src="script.js"></script>
 </body>
 </html>
+
+
+
+
+
 
 
 

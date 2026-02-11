@@ -138,8 +138,11 @@ function setupValentineButtons() {
     if (yesBtn && yesMessage) {
         yesBtn.addEventListener("click", function(e) {
             e.stopPropagation();
-            yesMessage.style.display = "block";
+            yesMessage.classList.remove("show");
+            void yesMessage.offsetWidth;
+            yesMessage.classList.add("show");
             launchConfetti();
+            setTimeout(launchConfetti, 420);
         });
     }
 }
@@ -185,15 +188,24 @@ function setupInteractivePages() {
     }
 
     const shuffleBtn = document.querySelector(".shuffle-btn");
-    const collageCards = document.querySelectorAll("#love-collage .polaroid");
-    if (shuffleBtn && collageCards.length > 0) {
+    const collage = document.getElementById("love-collage");
+    const collageCards = collage ? Array.from(collage.querySelectorAll(".polaroid")) : [];
+    if (shuffleBtn && collage && collageCards.length > 0) {
         shuffleBtn.addEventListener("click", function(e) {
             e.stopPropagation();
-            collageCards.forEach((card) => {
-                const randomRotation = Math.round((Math.random() - 0.5) * 18);
-                const randomY = Math.round((Math.random() - 0.5) * 8);
+            const order = collageCards
+                .map((card) => ({ card, sort: Math.random() }))
+                .sort((a, b) => a.sort - b.sort)
+                .map((item) => item.card);
+
+            order.forEach((card, index) => {
+                card.style.order = String(index);
+                const randomRotation = Math.round((Math.random() - 0.5) * 20);
+                const randomY = Math.round((Math.random() - 0.5) * 10);
                 card.style.transform = "rotate(" + randomRotation + "deg) translateY(" + randomY + "px)";
             });
+
+            collage.scrollTo({ left: 0, behavior: "smooth" });
         });
     }
 
@@ -218,11 +230,23 @@ function setupInteractivePages() {
 
     const sticker = document.getElementById("sticker-open");
     const secretLetter = document.getElementById("secret-letter");
+    const envelope = document.querySelector(".envelope-card");
     if (sticker && secretLetter) {
         sticker.addEventListener("click", function(e) {
             e.stopPropagation();
-            secretLetter.classList.toggle("show");
-            sticker.textContent = secretLetter.classList.contains("show") ? "Sealed in my heart" : "Tap to open";
+            if (envelope && envelope.classList.contains("opened")) return;
+
+            if (envelope) {
+                envelope.classList.add("open");
+                envelope.classList.add("opened");
+            }
+
+            sticker.classList.add("opened");
+            sticker.textContent = "Opened";
+
+            setTimeout(() => {
+                secretLetter.classList.add("show");
+            }, 320);
         });
     }
 }
