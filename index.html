@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Happy Valentine’s Day ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/blasten/turn.js@master/turn.min.js"></script>
+</head>
+
+<body>
+
+<!-- PASSWORD SCREEN -->
+<div id="password-screen">
+    <h2>Enter Our Special Date 💕</h2>
+    <input type="password" id="password-input" placeholder="DDMMYYYY">
+    <button onclick="checkPassword()">Open Scrapbook</button>
+    <p id="error"></p>
+</div>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bgm" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- FLIPBOOK -->
+<div id="flipbook-container" style="display:none;">
+    <div id="flipbook">
+
+        <div class="page cover">
+            <h1>Happy Valentine’s Day 💖</h1>
+            <p>Tap to turn the page</p>
+        </div>
+
+        <div class="page">
+            <h2>How It All Started</h2>
+            <p>The moment I met you, everything changed.</p>
+        </div>
+
+        <div class="page">
+            <h2>Our First Trip</h2>
+            <p>Every journey with you feels like home.</p>
+        </div>
+
+        <div class="page">
+            <h2>That Silly Selfie 😂</h2>
+            <p>Your smile still melts my heart.</p>
+        </div>
+
+        <div class="page">
+            <h2>Our Favorite Memory</h2>
+            <p>I replay this day in my head all the time.</p>
+        </div>
+
+        <div class="page">
+            <h2>Why I Love You ❤️</h2>
+            <button onclick="showReasons()">Tap Here</button>
+            <ul id="reasons" style="display:none;">
+                <li>Your kindness</li>
+                <li>Your strength</li>
+                <li>Your laugh</li>
+                <li>Your love</li>
+            </ul>
+        </div>
+
+        <div class="page">
+            <h2>Through Everything</h2>
+            <p>We’ve grown stronger together.</p>
+        </div>
+
+        <div class="page">
+            <h2>Forever</h2>
+            <p>I choose you. Every day. Always.</p>
+        </div>
+
+        <div class="page">
+            <h2>My Promise</h2>
+            <p>To love you more with every page of life.</p>
+        </div>
+
+        <div class="page cover">
+            <h2>I Love You Always 💘</h2>
+        </div>
+
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
