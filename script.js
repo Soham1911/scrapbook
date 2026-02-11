@@ -1,4 +1,12 @@
 let flipInitialized = false;
+let turnGestureBound = false;
+
+function syncFlipbookSize() {
+    if (!flipInitialized) return;
+    const container = document.getElementById("flipbook-container");
+    if (!container) return;
+    $("#flipbook").turn("size", container.clientWidth, container.clientHeight);
+}
 
 function checkPassword() {
     const correctPassword = "27112024"; // change this
@@ -16,12 +24,14 @@ function checkPassword() {
                     height: container.clientHeight,
                     autoCenter: true,
                     display: "single",
-                    gradients: true,
-                    elevation: 50,
-                    acceleration: false
+                    gradients: false,
+                    elevation: 25,
+                    acceleration: false,
+                    duration: 550
                 });
 
                 flipInitialized = true;
+                setupTurnGestures();
             }
         }, 200);
 
@@ -217,24 +227,46 @@ function setupInteractivePages() {
     }
 }
 
-/* TAP LEFT/RIGHT TO TURN */
-document.addEventListener("click", function(e) {
-    const interactiveTarget = e.target.closest("[data-no-turn], button, input, textarea, select, label, a");
-    if (interactiveTarget) return;
-
-    if (!flipInitialized) return;
+function setupTurnGestures() {
+    if (turnGestureBound) return;
 
     const container = document.getElementById("flipbook-container");
-    if (!container || container.style.display === "none") return;
+    if (!container) return;
 
-    const rect = container.getBoundingClientRect();
-    const insideBook = e.clientX >= rect.left && e.clientX <= rect.right &&
-        e.clientY >= rect.top && e.clientY <= rect.bottom;
-    if (!insideBook) return;
+    let startX = 0;
+    let startY = 0;
+    let startedOnInteractive = false;
 
-    const clickOnLeft = e.clientX < rect.left + rect.width / 2;
-    $("#flipbook").turn(clickOnLeft ? "previous" : "next");
-});
+    container.addEventListener("pointerdown", function(e) {
+        const interactiveTarget = e.target.closest("[data-no-turn], button, input, textarea, select, label, a, .photo-board, .timeline");
+        startedOnInteractive = Boolean(interactiveTarget);
+        if (startedOnInteractive) return;
+        startX = e.clientX;
+        startY = e.clientY;
+    }, { passive: true });
+
+    container.addEventListener("pointerup", function(e) {
+        if (!flipInitialized || startedOnInteractive) return;
+
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        const absDx = Math.abs(dx);
+        const absDy = Math.abs(dy);
+
+        if (absDx >= 24 && absDy < 34) {
+            $("#flipbook").turn(dx < 0 ? "next" : "previous");
+            return;
+        }
+
+        if (absDx <= 8 && absDy <= 8) {
+            const rect = container.getBoundingClientRect();
+            const tapOnLeft = e.clientX < rect.left + rect.width / 2;
+            $("#flipbook").turn(tapOnLeft ? "previous" : "next");
+        }
+    }, { passive: true });
+
+    turnGestureBound = true;
+}
 
 function createHeart() {
     const heart = document.createElement("div");
@@ -253,3 +285,4 @@ setInterval(createHeart, 1500);
 
 setupInteractivePages();
 setupValentineButtons();
+window.addEventListener("resize", syncFlipbookSize);
