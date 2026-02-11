@@ -5,15 +5,12 @@ function checkPassword() {
     const input = document.getElementById("password-input").value;
 
     if (input === correctPassword) {
-
         document.getElementById("password-screen").style.display = "none";
         const container = document.getElementById("flipbook-container");
         container.style.display = "block";
 
-        setTimeout(function () {
-
+        setTimeout(function() {
             if (!flipInitialized) {
-
                 $("#flipbook").turn({
                     width: container.clientWidth,
                     height: container.clientHeight,
@@ -21,24 +18,18 @@ function checkPassword() {
                     display: "single",
                     gradients: true,
                     elevation: 50,
-                    acceleration: true
+                    acceleration: false
                 });
 
                 flipInitialized = true;
             }
-
         }, 200);
 
         const bgm = document.getElementById("bgm");
-        if (bgm) bgm.play().catch(()=>{});
-
+        if (bgm) bgm.play().catch(() => {});
     } else {
-        document.getElementById("error").innerText = "Wrong password 💔";
+        document.getElementById("error").innerText = "Wrong password. Try again.";
     }
-}
-
-function showReasons() {
-    document.getElementById("reasons").style.display = "block";
 }
 
 function moveNoButton() {
@@ -50,11 +41,11 @@ function moveNoButton() {
 
     const maxX = Math.max(actions.clientWidth - noBtn.offsetWidth, 0);
     const maxY = Math.max(actions.clientHeight - noBtn.offsetHeight, 0);
-    const safeGap = 10;
+    const safeGap = 12;
     let nextX = noBtn.offsetLeft;
     let nextY = noBtn.offsetTop;
 
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 36; i++) {
         const x = Math.random() * maxX;
         const y = Math.random() * maxY;
 
@@ -143,9 +134,92 @@ function setupValentineButtons() {
     }
 }
 
+function setupInteractivePages() {
+    const revealButtons = document.querySelectorAll(".reveal-btn");
+    revealButtons.forEach((button) => {
+        button.addEventListener("click", function(e) {
+            e.stopPropagation();
+            const targetId = button.dataset.target;
+            const note = document.getElementById(targetId);
+            if (!note) return;
+            note.classList.toggle("show");
+            button.textContent = note.classList.contains("show") ? "Hide Memory Note" : "Open Memory Note";
+        });
+    });
+
+    const chips = document.querySelectorAll(".memory-chip");
+    const chipOutput = document.getElementById("chip-output");
+    chips.forEach((chip) => {
+        chip.addEventListener("click", function(e) {
+            e.stopPropagation();
+            if (!chipOutput) return;
+            chipOutput.textContent = chip.dataset.text || "";
+        });
+    });
+
+    const meter = document.getElementById("love-meter");
+    const meterText = document.getElementById("love-meter-text");
+    const meterMessages = {
+        "1": "Crushing softly, smiling secretly.",
+        "2": "Falling steadily, heartbeat by heartbeat.",
+        "3": "Somewhere between best friends and soulmates.",
+        "4": "Hopelessly in love and loving every second.",
+        "5": "Married, magical, and forever yours."
+    };
+
+    if (meter && meterText) {
+        meter.addEventListener("input", function(e) {
+            e.stopPropagation();
+            meterText.textContent = meterMessages[meter.value] || meterMessages["3"];
+        });
+    }
+
+    const shuffleBtn = document.querySelector(".shuffle-btn");
+    const collageCards = document.querySelectorAll("#love-collage .polaroid");
+    if (shuffleBtn && collageCards.length > 0) {
+        shuffleBtn.addEventListener("click", function(e) {
+            e.stopPropagation();
+            collageCards.forEach((card) => {
+                const randomRotation = Math.round((Math.random() - 0.5) * 18);
+                const randomY = Math.round((Math.random() - 0.5) * 8);
+                card.style.transform = "rotate(" + randomRotation + "deg) translateY(" + randomY + "px)";
+            });
+        });
+    }
+
+    const timelineTexts = {
+        vow: "When we said our vows, time felt still.",
+        ring: "The ring slide felt like destiny fitting perfectly.",
+        dance: "Our first dance was clumsy, tender, and unforgettable."
+    };
+
+    const timelineButtons = document.querySelectorAll(".timeline-step");
+    const timelineMemory = document.getElementById("timeline-memory");
+    timelineButtons.forEach((btn) => {
+        btn.addEventListener("click", function(e) {
+            e.stopPropagation();
+            timelineButtons.forEach((item) => item.classList.remove("active"));
+            btn.classList.add("active");
+            if (!timelineMemory) return;
+            const key = btn.dataset.memory;
+            timelineMemory.textContent = timelineTexts[key] || "";
+        });
+    });
+
+    const sticker = document.getElementById("sticker-open");
+    const secretLetter = document.getElementById("secret-letter");
+    if (sticker && secretLetter) {
+        sticker.addEventListener("click", function(e) {
+            e.stopPropagation();
+            secretLetter.classList.toggle("show");
+            sticker.textContent = secretLetter.classList.contains("show") ? "Sealed in my heart" : "Tap to open";
+        });
+    }
+}
+
 /* TAP LEFT/RIGHT TO TURN */
 document.addEventListener("click", function(e) {
-    const interactiveTarget = e.target.closest("button, input, textarea, select, label, a, #reasons");
+    const interactiveTarget = e.target.closest("[data-no-turn], button, input, textarea, select, label, a");
     if (interactiveTarget) return;
 
     if (!flipInitialized) return;
@@ -175,7 +249,7 @@ function createHeart() {
     }, 6000);
 }
 
-setInterval(createHeart, 1500); 
+setInterval(createHeart, 1500);
 
+setupInteractivePages();
 setupValentineButtons();
-

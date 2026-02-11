@@ -2,10 +2,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Happy Valentine’s Day ❤️</title>
+<title>Happy Valentine's Day</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -14,82 +14,148 @@
 
 <body>
 
-<!-- PASSWORD SCREEN -->
 <div id="password-screen">
-    <h2>Enter Our Special Date 💕</h2>
-    <input type="password" id="password-input" placeholder="DDMMYYYY">
-    <button onclick="checkPassword()">Open Scrapbook</button>
+    <h2>Enter Our Special Date</h2>
+    <input type="password" id="password-input" placeholder="DDMMYYYY" data-no-turn>
+    <button onclick="checkPassword()" data-no-turn>Open Scrapbook</button>
     <p id="error"></p>
 </div>
 
-<!-- BACKGROUND MUSIC -->
 <audio id="bgm" loop>
     <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<!-- FLIPBOOK -->
 <div id="flipbook-container" style="display:none;">
     <div id="flipbook">
 
-        <div class="page cover">
-            <h1>Happy Valentine’s Day 💖</h1>
-            <p>Tap to turn the page</p>
-        </div>
+        <section class="page cover">
+            <div class="page-stamp">Our Story</div>
+            <h1>The Scrapbook of Us</h1>
+            <p class="subtitle">Tap right for next page, left for previous page.</p>
+        </section>
 
-        <div class="page">
-            <h2>How It All Started</h2>
-            <p>The moment I met you, everything changed.</p>
-        </div>
-
-        <div class="page">
-            <h2>Our First Trip</h2>
-            <p>Every journey with you feels like home.</p>
-        </div>
-
-        <div class="page">
-            <h2>That Silly Selfie 😂</h2>
-            <p>Your smile still melts my heart.</p>
-        </div>
-
-        <div class="page">
-            <h2>Our Favorite Memory</h2>
-            <p>I replay this day in my head all the time.</p>
-        </div>
-
-        <div class="page">
-            <h2>Why I Love You ❤️</h2>
-            <button onclick="showReasons()">Tap Here</button>
-            <ul id="reasons" style="display:none;">
-                <li>Your kindness</li>
-                <li>Your strength</li>
-                <li>Your laugh</li>
-                <li>Your love</li>
-            </ul>
-        </div>
-
-        <div class="page">
-            <h2>Through Everything</h2>
-            <p>We’ve grown stronger together.</p>
-        </div>
-
-        <div class="page">
-            <h2>Forever</h2>
-            <p>I choose you. Every day. Always.</p>
-        </div>
-
-        <div class="page">
-            <h2>My Promise</h2>
-            <p>To love you more with every page of life.</p>
-        </div>
-
-        <div class="page cover">
-            <h2>Will You Be My Valentine? 💘</h2>
-            <div class="valentine-actions" id="valentine-actions">
-                <button id="yes-btn" type="button">Yes</button>
-                <button id="no-btn" type="button">No</button>
+        <section class="page">
+            <h2>Chapter 1: Corporate Beginnings</h2>
+            <p class="poem">In crowded halls and formal lights,<br>my heart found yours between busy nights.</p>
+            <div class="photo-board two-up">
+                <figure class="polaroid">
+                    <div class="photo-placeholder">Add photo: <code>images/office-first-meet.jpg</code></div>
+                    <figcaption>First glance across the office floor.</figcaption>
+                </figure>
+                <figure class="polaroid tilt-right">
+                    <div class="photo-placeholder">Add photo: <code>images/office-coffee-break.jpg</code></div>
+                    <figcaption>The coffee break that started everything.</figcaption>
+                </figure>
             </div>
-            <p id="yes-message" style="display:none;">Yay! I love you so much ❤️</p>
-        </div>
+            <button class="reveal-btn" data-target="meet-note" data-no-turn>Open Memory Note</button>
+            <p id="meet-note" class="hidden-note">You were the calm in my corporate chaos.</p>
+        </section>
+
+        <section class="page">
+            <h2>Chapter 2: Friends First</h2>
+            <p class="poem">Laughter stayed after meetings were done,<br>and friendship turned ordinary days into fun.</p>
+            <div class="photo-board two-up">
+                <figure class="polaroid tilt-left">
+                    <div class="photo-placeholder">Add photo: <code>images/team-lunch.jpg</code></div>
+                    <figcaption>Team lunch, endless jokes.</figcaption>
+                </figure>
+                <figure class="polaroid">
+                    <div class="photo-placeholder">Add photo: <code>images/after-work-walk.jpg</code></div>
+                    <figcaption>After work walks that felt like home.</figcaption>
+                </figure>
+            </div>
+            <div class="memory-chips">
+                <button class="memory-chip" data-text="The day we laughed so hard everyone stared." data-no-turn>Inside Joke</button>
+                <button class="memory-chip" data-text="That one rainy evening where we shared one umbrella." data-no-turn>Rainy Evening</button>
+                <button class="memory-chip" data-text="Your message that made me smile till morning." data-no-turn>Late Night Text</button>
+            </div>
+            <p id="chip-output" class="chip-output">Tap a memory chip.</p>
+        </section>
+
+        <section class="page">
+            <h2>Chapter 3: Falling in Love</h2>
+            <p class="poem">Somewhere between hello and always,<br>you became my favorite place.</p>
+            <label for="love-meter" class="meter-label">How in love are we today?</label>
+            <input id="love-meter" class="love-meter" type="range" min="1" max="5" value="3" data-no-turn>
+            <p id="love-meter-text" class="meter-text">Somewhere between best friends and soulmates.</p>
+            <div class="photo-board one-wide shuffle-board" id="love-collage">
+                <figure class="polaroid mini" data-no-turn>
+                    <div class="photo-placeholder">Add photo: <code>images/first-date.jpg</code></div>
+                    <figcaption>Our first date.</figcaption>
+                </figure>
+                <figure class="polaroid mini" data-no-turn>
+                    <div class="photo-placeholder">Add photo: <code>images/first-gift.jpg</code></div>
+                    <figcaption>The first little gift.</figcaption>
+                </figure>
+                <figure class="polaroid mini" data-no-turn>
+                    <div class="photo-placeholder">Add photo: <code>images/favorite-selfie.jpg</code></div>
+                    <figcaption>That smile I fell for.</figcaption>
+                </figure>
+            </div>
+            <button class="shuffle-btn" data-no-turn>Shuffle Memories</button>
+        </section>
+
+        <section class="page">
+            <h2>Chapter 4: We Said Yes</h2>
+            <p class="poem">Two hands, one promise, endless skies,<br>our forever began in each other's eyes.</p>
+            <div class="photo-board two-up">
+                <figure class="polaroid">
+                    <div class="photo-placeholder">Add photo: <code>images/wedding-ceremony.jpg</code></div>
+                    <figcaption>The ceremony.</figcaption>
+                </figure>
+                <figure class="polaroid tilt-right">
+                    <div class="photo-placeholder">Add photo: <code>images/wedding-portrait.jpg</code></div>
+                    <figcaption>Our first portrait as forever.</figcaption>
+                </figure>
+            </div>
+            <div class="timeline" data-no-turn>
+                <button class="timeline-step active" data-memory="vow" data-no-turn>Vows</button>
+                <button class="timeline-step" data-memory="ring" data-no-turn>Rings</button>
+                <button class="timeline-step" data-memory="dance" data-no-turn>First Dance</button>
+            </div>
+            <p class="timeline-memory" id="timeline-memory">When we said our vows, time felt still.</p>
+        </section>
+
+        <section class="page">
+            <h2>Chapter 5: Married & Happy</h2>
+            <p class="poem">Now every morning starts with your smile,<br>and every ordinary moment feels worthwhile.</p>
+            <div class="photo-board one-wide">
+                <figure class="polaroid">
+                    <div class="photo-placeholder">Add photo: <code>images/home-moment.jpg</code></div>
+                    <figcaption>Little moments at home.</figcaption>
+                </figure>
+            </div>
+            <div class="love-list" data-no-turn>
+                <label><input type="checkbox" data-no-turn> Sunday breakfast dates</label>
+                <label><input type="checkbox" data-no-turn> Random dance in the kitchen</label>
+                <label><input type="checkbox" data-no-turn> Late night movie + cuddles</label>
+            </div>
+            <p class="small-note">Check the moments we keep living together.</p>
+        </section>
+
+        <section class="page">
+            <h2>Little Envelope for You</h2>
+            <p class="poem">I may not say it enough,<br>but every heartbeat spells your name.</p>
+            <div class="envelope-card" data-no-turn>
+                <button class="sticker" id="sticker-open" data-no-turn>Tap to open</button>
+                <p id="secret-letter" class="secret-letter">If I had to live this life again, I'd still find you in that same office and choose you all over again.</p>
+            </div>
+            <div class="photo-board one-wide">
+                <figure class="polaroid tilt-left">
+                    <div class="photo-placeholder">Add photo: <code>images/favorite-us.jpg</code></div>
+                    <figcaption>My favorite us.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section class="page cover">
+            <h2>Will You Be My Valentine?</h2>
+            <div class="valentine-actions" id="valentine-actions">
+                <button id="yes-btn" type="button" data-no-turn>Yes</button>
+                <button id="no-btn" type="button" data-no-turn>No</button>
+            </div>
+            <p id="yes-message" style="display:none;">Yay! I love you so much</p>
+        </section>
 
     </div>
 </div>
@@ -97,3 +163,4 @@
 <script src="script.js"></script>
 </body>
 </html>
+
