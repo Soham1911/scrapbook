@@ -37,6 +37,18 @@ body {
     -webkit-backdrop-filter: blur(14px);
 }
 
+#password-form {
+    display: none;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+#password-form.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 #password-screen h2 {
     margin: 0 0 12px;
 }
@@ -56,6 +68,85 @@ body {
     min-height: 20px;
     color: #b83264;
     font-weight: 600;
+}
+
+#envelope-intro {
+    margin: 2px auto 12px;
+    width: min(90vw, 340px);
+    cursor: pointer;
+    user-select: none;
+}
+
+.envelope-shell {
+    position: relative;
+    width: 100%;
+    height: 210px;
+    perspective: 1000px;
+}
+
+.envelope-body {
+    position: absolute;
+    inset: 38px 0 0;
+    background: linear-gradient(160deg, #fff1f6, #f7dce8);
+    border: 1px solid rgba(183, 127, 151, 0.5);
+    border-radius: 10px;
+    box-shadow: 0 16px 24px rgba(103, 62, 81, 0.2);
+}
+
+.envelope-flap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 30px;
+    height: 84px;
+    background: linear-gradient(180deg, #ffdce9, #f8c7dc);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    border: 1px solid rgba(183, 127, 151, 0.45);
+    transform-origin: top center;
+    transition: transform 0.95s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 4;
+}
+
+.envelope-letter {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 14px;
+    height: 134px;
+    padding: 12px 10px;
+    border-radius: 4px;
+    background:
+        linear-gradient(transparent 22px, rgba(222, 172, 193, 0.16) 23px) 0 0 / 100% 24px,
+        linear-gradient(180deg, #fffef8, #fff3f8);
+    border: 1px solid rgba(205, 165, 183, 0.65);
+    box-shadow: 0 6px 12px rgba(97, 66, 82, 0.14);
+    transform: translateY(52px);
+    transition: transform 1.1s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 2;
+    overflow: hidden;
+}
+
+#envelope-typed {
+    margin: 0;
+    min-height: 98px;
+    font-size: 15px;
+    line-height: 1.25;
+    color: #6b3048;
+    text-align: left;
+}
+
+.envelope-hint {
+    margin: 10px 0 0;
+    font-size: 13px;
+    color: #8a4f68;
+}
+
+#envelope-intro.opened .envelope-flap {
+    transform: rotateX(172deg);
+}
+
+#envelope-intro.opened .envelope-letter {
+    transform: translateY(-6px);
 }
 
 #flipbook-container {

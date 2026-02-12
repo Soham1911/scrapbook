@@ -15,11 +15,24 @@
 <body>
 
 <div id="password-screen">
-    <h2>Before these pages bloom, whisper our date of destiny.</h2>
-    <p class="subtitle">Unlock our story where every memory still beats like a love song.</p>
-    <input type="password" id="password-input" placeholder="DDMMYYYY" data-no-turn>
-    <button onclick="checkPassword()" data-no-turn>Open Our Love Story</button>
-    <p id="error"></p>
+    <div id="envelope-intro" data-no-turn>
+        <div class="envelope-shell">
+            <div class="envelope-flap"></div>
+            <div class="envelope-body"></div>
+            <div class="envelope-letter">
+                <p id="envelope-typed"></p>
+            </div>
+        </div>
+        <p class="envelope-hint">Tap to open your letter</p>
+    </div>
+
+    <div id="password-form" data-no-turn>
+        <h2>Before these pages bloom, whisper our date of destiny.</h2>
+        <p class="subtitle">Unlock our story where every memory still beats like a love song.</p>
+        <input type="password" id="password-input" placeholder="DDMMYYYY" data-no-turn>
+        <button onclick="checkPassword()" data-no-turn>Open Our Love Story</button>
+        <p id="error"></p>
+    </div>
 </div>
 
 <audio id="bgm" loop>

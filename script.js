@@ -1,6 +1,33 @@
 let flipInitialized = false;
 let turnGestureBound = false;
 
+function setupEnvelopeIntro() {
+    const intro = document.getElementById("envelope-intro");
+    const typed = document.getElementById("envelope-typed");
+    const form = document.getElementById("password-form");
+    if (!intro || !typed || !form) return;
+
+    let opened = false;
+    const message = "My love, before these pages unfold, enter our special date and let our memories bloom again.";
+
+    intro.addEventListener("click", function() {
+        if (opened) return;
+        opened = true;
+        intro.classList.add("opened");
+
+        let i = 0;
+        const typer = setInterval(() => {
+            typed.textContent += message.charAt(i);
+            i += 1;
+            if (i >= message.length) {
+                clearInterval(typer);
+                form.style.display = "block";
+                requestAnimationFrame(() => form.classList.add("show"));
+            }
+        }, 28);
+    });
+}
+
 function syncFlipbookSize() {
     if (!flipInitialized) return;
     const container = document.getElementById("flipbook-container");
@@ -143,6 +170,67 @@ function setupValentineButtons() {
             yesMessage.classList.add("show");
             launchConfetti();
             setTimeout(launchConfetti, 420);
+        });
+    }
+}
+
+function setupPlayfulInteractions() {
+    const runnerMessages = [
+        "Too slow, sweetheart.",
+        "Nice try. Try again!",
+        "Almost caught me.",
+        "I learned this from your No button.",
+        "Catch me and I might reveal a kiss coupon."
+    ];
+
+    const runners = document.querySelectorAll(".tease-runner");
+    runners.forEach((runner) => {
+        const zone = runner.closest(".play-zone");
+        const noteId = runner.dataset.noteTarget;
+        const note = noteId ? document.getElementById(noteId) : null;
+        if (!zone) return;
+
+        const dodge = () => {
+            const maxX = Math.max(zone.clientWidth - runner.offsetWidth - 8, 0);
+            const maxY = Math.max(zone.clientHeight - runner.offsetHeight - 8, 0);
+            const x = Math.random() * maxX;
+            const y = Math.random() * Math.max(maxY - 18, 0);
+            runner.style.left = x + "px";
+            runner.style.top = y + "px";
+            if (note) {
+                note.textContent = runnerMessages[Math.floor(Math.random() * runnerMessages.length)];
+            }
+        };
+
+        runner.addEventListener("mouseenter", dodge);
+        runner.addEventListener("touchstart", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dodge();
+        }, { passive: false });
+        runner.addEventListener("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dodge();
+        });
+    });
+
+    const teaseBtn = document.getElementById("tease-reveal-btn");
+    const teaseText = document.getElementById("tease-reveal-text");
+    const teaseReplies = [
+        "You, by 2%.",
+        "Me, by 200%.",
+        "Both. But today, I am winning.",
+        "Plot twist: our dog wins.",
+        "Equal love, unlimited teasing."
+    ];
+    let teaseIndex = 0;
+
+    if (teaseBtn && teaseText) {
+        teaseBtn.addEventListener("click", function(e) {
+            e.stopPropagation();
+            teaseText.textContent = teaseReplies[teaseIndex % teaseReplies.length];
+            teaseIndex += 1;
         });
     }
 }
@@ -310,7 +398,9 @@ function createHeart() {
 
 setInterval(createHeart, 1500);
 
+setupEnvelopeIntro();
 setupInteractivePages();
+setupPlayfulInteractions();
 setupValentineButtons();
 window.addEventListener("resize", syncFlipbookSize);
 
